@@ -1,0 +1,128 @@
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.failure-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95em;
+}
+
+.failure-table thead {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.failure-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+}
+
+.failure-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.failure-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.failure-table tbody tr.selected {
+  background-color: rgba(130, 202, 157, 0.2);
+  border-left: 3px solid #82ca9d;
+}
+
+.failure-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.failure-table .numeric {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
+
+.failure-table .numeric-highlight {
+  color: #ffc658;
+  font-weight: 600;
+}
+
+.mode-name {
+  font-weight: 600;
+  color: #fff;
+}
+
+.mode-description {
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 3px;
+}
+
+.impact-bar {
+  width: 100%;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.impact-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #82ca9d, #ffc658);
+  transition: width 0.3s;
+}
+
+.data-importer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.data-importer h3 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.import-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.import-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 200px;
+}
+
+.import-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.import-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.import-hint {
+  margin: 0;
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.6);
+}

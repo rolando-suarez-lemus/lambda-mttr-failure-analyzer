@@ -1,0 +1,155 @@
+.app-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  margin: 0 0 20px 0;
+  font-size: 1.1em;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+}
+
+.credits {
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.credits p {
+  margin: 5px 0;
+}
+
+.credits strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.credits em {
+  opacity: 0.8;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.controls-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.visualization-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-panel {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+}
+
+.chart-panel h2 {
+  margin-top: 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.table-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-section h2 {
+  margin-top: 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.info-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.info-section h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.info-section p {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.model-source {
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin-top: 15px;
+}
+
+@media (max-width: 1024px) {
+  .visualization-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .app-header {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .app-header h1 {
+    font-size: 1.8em;
+  }
+
+  .subtitle {
+    font-size: 1em;
+  }
+}
