@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import './components/index.css'
 import ParetoDiagram from './components/ParetoDiagram.js'
 import LambdaMTTRChart from './components/LambdaMTTRChart.js'
 import FailureModeTable from './components/FailureModeTable.js'
@@ -55,7 +56,7 @@ function App() {
             <br />
             Operational Reliability (ISO 55000, RCM) | Data Analytics
             <br />
-            <em>with GitHub Copilot assistance</em>
+            <em>with GitHub Copilot assistance | UI Protocol: Lumina ID-LUM-001</em>
           </p>
         </div>
       </header>
@@ -108,8 +109,13 @@ function App() {
             <br />
             where D<sub>i</sub> = Fraction of equipment downtime for failure mode i
           </p>
+          <p>
+            <strong>Mathematical Foundation:</strong> Derived from "El Arte de Mantener" 
+            by R. Pascual (Universidad de Chile). Implements ISO 55001 Asset Management 
+            and RCM (Reliability-Centered Maintenance) best practices.
+          </p>
           <p className="model-source">
-            Based on "El Arte de Mantener" by R. Pascual, Universidad de Chile
+            Reference: Chapter 57 - Pareto Analysis for Maintenance Downtime Prioritization
           </p>
         </section>
       </main>
