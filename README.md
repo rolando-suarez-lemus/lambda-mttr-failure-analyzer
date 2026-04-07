@@ -1,185 +1,135 @@
-# λ-MTTR Failure Analysis Tool
+# Prioritización de Modos de Falla mediante λ-MTTR
 
-An interactive web application for **Pareto-based failure mode analysis** in industrial maintenance and reliability engineering. Built with the **λ-MTTR mathematical model** for equipment downtime prioritization.
+## Problema Operativo
 
----
+En sistemas con múltiples modos de falla, la asignación de recursos de mantenimiento debe reducir incertidumbre sobre cuál falla contribuye más al tiempo fuera de servicio del equipo. Sin criterio explícito, los esfuerzos se dispersan entre síntomas de baja criticidad.
 
-## Overview
-
-This tool implements the **λ-MTTR analysis framework** from "El Arte de Mantener" (R. Pascual, Universidad de Chile), enabling maintenance engineers and RCM specialists to:
-
-- **Visualize failure criticality** using Pareto diagrams
-- **Analyze failure rate vs. repair time** trade-offs in scatter plots
-- **Prioritize maintenance efforts** based on cumulative downtime
-- **Import custom failure data** via JSON files
-
-The formula at the heart of this analysis:
+El λ-MTTR estructura cómo cuantificar el impacto operativo de cada modo:
 
 $$D_i = \lambda_i \times MTTR_i$$
 
-Where:
-- **D<sub>i</sub>** = Fraction of equipment downtime for failure mode i
-- **λ<sub>i</sub>** = Failure frequency (failures per unit time)
-- **MTTR<sub>i</sub>** = Mean Time To Repair (minutes)
+Donde:
+- **D<sub>i</sub>** = Fracción del tiempo de inactividad atribuible a modo i
+- **λ<sub>i</sub>** = Frecuencia de falla (eventos por unidad de tiempo)
+- **MTTR<sub>i</sub>** = Tiempo medio de reparación (minutos)
+
+Esta métrica revela que un fallo frecuente pero rápido de reparar puede ser menos crítico que un fallo raro pero de reparación lenta. El análisis Pareto sobre D_i identifica dónde concentrar inversión en prevención.
+
 
 ---
 
-## Features
+## Estructura del Análisis
 
-### 1. **Pareto Priority Diagram**
-Interactive visualization ranking failure modes by cumulative downtime contribution. Follows the 80-20 rule to identify critical failure modes requiring immediate maintenance focus.
+### 1. Rank Pareto por Impacto Acumulado
+Ordena modos por D_i descendente. El 20% superior típicamente explica 80% del tiempo de inactividad. Esto establece el criterio de inversión para prevención (cambio de componentes, rediseño, redundancia).
 
-### 2. **λ-MTTR Scatter Chart**
-Two-dimensional analysis showing the relationship between failure frequency and repair time. Identifies which failures consume the most operational capacity.
+### 2. Diagrama λ vs MTTR
+Scatter 2D revela la estructura de criticidad:
+- **Alta λ, Alta MTTR**: Máxima prioridad (ambos factores agravan impacto)
+- **Alta λ, Baja MTTR**: Monitor; el tiempo de reparación rápida mitiga
+- **Baja λ, Alta MTTR**: Riesgo latente; intervención preventiva es eficiente
+- **Baja λ, Baja MTTR**: Gestión según disponibilidad
 
-### 3. **Failure Mode Details Table**
-Sortable table displaying all failure metrics:
-- Failure code and mode name
-- Lambda (failures/ut) and MTTR (minutes)
-- Calculated downtime impact (D<sub>i</sub>)
-- Visual impact bars for quick reference
-
-### 4. **Data Import**
-Upload custom failure mode datasets via JSON files. Supports flexible data structures for seamless integration with existing maintenance databases.
+### 3. Importación de Datos
+Integración directa con bases de datos operacionales. Permite comparar múltiples equipos o períodos y cuantificar mejora post-intervención.
 
 ---
 
-## Technical Stack
+## Formato de Datos
 
-- **Frontend**: React 19.2 + TypeScript 5.9
-- **Build Tool**: Vite 6.1
-- **Charting**: Recharts 3.8 (Pareto, scatter, and composed charts)
-- **Styling**: CSS Grid + Glassmorphism design
-- **Icons**: Lucide React
-- **Validation**: Zod (optional, for strict imports)
-
----
-
-## Installation & Setup
-
-### Prerequisites
-- Node.js 20+ (npm or Bun)
-
-### Development
-
-```bash
-npm install
-npm run dev
-```
-
-Runs the app at `http://localhost:5173` with hot module reloading.
-
-### Production Build
-
-```bash
-npm run build
-npm run preview
-```
-
----
-
-## Data Format
-
-Import failure data as a JSON array. Each failure mode must include:
+Importar como array JSON. Cada modo debe incluir:
 
 ```json
 [
   {
     "id": "1",
-    "code": "1",
-    "name": "Bearing Failure",
-    "description": "Main bearing degradation",
+    "code": "01",
+    "name": "Falla de rodamiento",
+    "description": "Degradación material en rodamiento principal",
     "lambda": 0.15,
     "mttr": 150
   }
 ]
 ```
 
-### Field Definitions
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Unique identifier |
-| `code` | string | Failure mode code (for Pareto display) |
-| `name` | string | Failure mode name |
-| `description` | string | Detailed failure description |
-| `lambda` | number | Failure frequency (failures/unit time) |
-| `mttr` | number | Mean time to repair (minutes) |
+| Campo | Tipo | Definición |
+|-------|------|-----------|
+| `id` | string | Identificador único |
+| `code` | string | Código para seguimiento Pareto |
+| `name` | string | Modo de falla |
+| `lambda` | number | Frecuencia (eventos/ut) |
+| `mttr` | number | Tiempo reparación (minutos) |
 
 ---
 
-## Architecture
+## Arquitectura
 
 ```
 src/
-├── App.tsx                    # Main application component
-├── types.ts                   # TypeScript interfaces
+├── App.tsx
 ├── components/
-│   ├── ParetoDiagram.tsx      # Pareto analysis visualization
-│   ├── LambdaMTTRChart.tsx    # Scatter plot (λ vs MTTR)
-│   ├── FailureModeTable.tsx   # Failure mode details table
-│   └── DataImporter.tsx       # JSON file upload
+│   ├── ParetoDiagram.tsx      # Ranking acumulado
+│   ├── LambdaMTTRChart.tsx    # Scatter λ vs MTTR
+│   ├── FailureModeTable.tsx   # Tabla de modos
+│   └── DataImporter.tsx       # JSON import
 └── data/
-    └── sampleFailures.ts      # Default dataset (10 failure modes)
+    └── sampleFailures.ts
 ```
 
 ---
 
-## Development
+## Stack Técnico
 
-### ESLint & Code Quality
+- **React 19.2** + TypeScript 5.9 (strict)
+- **Vite 6.1** + HMR
+- **Recharts 3.8**: Pareto y scatter
+- **CSS Grid** + Glasmorphism
+- **Lucide React**: Iconografía
+
+---
+
+## Instalación
+
 ```bash
-npm run lint
+npm install
+npm run dev
+# http://localhost:5173
+
+npm run build
+npm run preview
 ```
 
-### TypeScript Strict Mode
-All code adheres to TypeScript `strict: true` configuration.
+---
+
+## Impacto Operativo
+
+### Reducción de Incertidumbre
+Estructurar modos de falla bajo λ-MTTR elimina decisiones basadas en creencias. El Pareto fuerza la concentración de recursos donde el impacto es cuantificable.
+
+### Mejora de Disponibilidad
+Si el 20% de modos consume 80% del tiempo de inactividad, intervención enfocada en esos modos (rediseño, componentes de mayor confiabilidad) impacta directamente en A₀ (disponibilidad operacional).
+
+### Referencia Histórica
+Guardar análisis λ-MTTR por período permite auditar si las intervenciones redujeron efectivamente D_i o solo redistribuyeron fallos.
 
 ---
 
-## Model Reference
+## Referencias
 
-**Source**: "El Arte de Mantener", Chapter 57: Pareto Analysis for Maintenance Downtime
-**Author**: Roberto Pascual, Universidad de Chile  
-**Application**: RCM (Reliability-Centered Maintenance), ISO 55001 Asset Management
-
-The λ-MTTR model is fundamental to:
-- **RCM task prioritization** (ISO/IEC 60812)
-- **Operational reliability** improvement programs
-- **Preventive maintenance** planning
-- **Asset criticality assessment**
+- **Pascual, R.** (2008). "El Arte de Mantener", Cap. 57: Análisis Pareto de Inactividad. Universidad de Chile
+- **ISO/IEC 60812**: Failure data  
+- **RCM**: ISO 55001 Asset Management
 
 ---
 
-## Credits & Attribution
+## Equipo
 
-### Development Team
-- **Rolando Suárez Lemus**
-  - Mechanical Engineer
-  - Specialist in Asset Management & Operational Reliability
-  - RCM, ISO 55000, Data Analytics
-  - Author & Lead Developer
+**Rolando Suárez Lemus**  
+Ingeniero Mecánico | Especialista en Confiabilidad Operacional y Gestión de Activos  
+ISO 55000, RCM, Automatización
 
-- **GitHub Copilot**
-  - AI Assistant for Code Generation & Architecture
-  - Claude Haiku 4.5 Model
-
-### Mathematical Framework
-- Sourced from peer-reviewed maintenance engineering literature
-- Validated against industrial case studies in critical infrastructure
+GitHub: [@rolando-suarez-lemus](https://github.com/rolando-suarez-lemus)
 
 ---
 
-## License
-
-This project is provided as-is for educational and industrial maintenance planning purposes.
-
----
-
-## Support & Further Development
-
-For questions, improvements, or real-world case studies, please contact the development team.
-
----
-
-**Last Updated**: April 5, 2026  
-**Version**: 1.0.0
+**Versión**: 1.0.0 | Abril 2026
