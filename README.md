@@ -116,9 +116,11 @@ Guardar análisis λ-MTTR por período permite auditar si las intervenciones red
 
 ## Referencias
 
-- **Pascual, R.** (2008). "El Arte de Mantener", Cap. 57: Análisis Pareto de Inactividad. Universidad de Chile
-- **ISO/IEC 60812**: Failure data  
-- **RCM**: ISO 55001 Asset Management
+- **Pascual, R.** (2008): "El Arte de Mantener" (3ª ed.), Cap. 57: Análisis Pareto de Inactividad, Universidad de Chile
+- **ISO 55000**: Asset Management — Overview, principles and terminology
+- **ISO 55001**: Asset Management — Management systems — Requirements
+- **ISO/IEC 60812**: Failure modes and effects analysis (FMEA) and criticality analysis
+- **Ramakumar, R.** (1993): Engineering Reliability: Fundamentals and Applications, Prentice Hall
 
 ---
 
